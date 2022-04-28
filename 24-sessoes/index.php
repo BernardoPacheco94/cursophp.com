@@ -42,30 +42,33 @@ Utilizados para sistemas de login ou carrinhos de compra, etc
 
     require_once 'db_connect.php'; //realiza conexão ao banco
 
+    session_start();
 
-    if (isset($_POST['entrar'])) {
+
+    if (isset($_POST['btn-entrar'])) {
         $erros = array();
-        $usuario = mysqli_escape_string($conn, $_POST['usuario']);
-        $senha = mysqli_escape_string($conn, $_POST['senha']);
+        $login = mysqli_escape_string($connect, $_POST['login']);
+        $senha = mysqli_escape_string($connect, $_POST['senha']);
 
-        if(empty($usuario) || empty($senha)){ //se login estiver vazio, vai um erro para o array $erros
+        if(empty($login) || empty($senha)){ //se login estiver vazio, vai um erro para o array $erros
             $erros []= "<li>Login ou senha não foi preenchido </li>";
         }else{
-            $sql = "SELECT login FROM usuarios WHERE login = '$usuario'";
-            $resultado = mysqli_query($conn, $sql);
+            $sql = "SELECT login FROM usuarios WHERE login = '$login'";
+            $resultado = mysqli_query($connect, $sql);
 
             if(mysqli_num_rows($resultado) > 0){
                 $senha = md5($senha);
-                $sql = "SELECT login FROM usuarios WHERE login = '$usuario' AND senha = '$senha'";
-                $resultado = mysqli_query($conn, $sql);
+                $sql = "SELECT * FROM usuarios WHERE login = '$login' AND senha = '$senha'";
+                $resultado = mysqli_query($connect, $sql);
 
                 if(mysqli_num_rows($resultado) == 1){
                     $dados = mysqli_fetch_array($resultado);
+                    mysqli_close($connect);
                     $_SESSION ['logado'] = true;
                     $_SESSION ['id_usuario'] = $dados['id'];
                     header('Location: home.php');
                 }else{
-                    $erros[]="<li> usuário/senha não confere";
+                    $erros[]="<li> usuário/senha inválido </li>";
                 }
             }else{
                 $erros[] = "<li> Usuário inexistente </li>";
@@ -87,9 +90,9 @@ Utilizados para sistemas de login ou carrinhos de compra, etc
     ?>
     
     <form action=" <?php echo $_SERVER['PHP_SELF']; ?> " method="POST">
-        Usuário: <input type="text" name="usuario"><br>
+        Usuário: <input type="text" name="login"><br>
         Senha: <input type="password" name="senha"><br>
-        <button name="entrar">Entrar</button>
+        <button name="btn-entrar">Entrar</button>
     </form>
 </body>
 
