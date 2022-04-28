@@ -16,6 +16,6 @@
 <body>
     <h1>LOGIN REALIZADO BRO</h1>
 
-    <p>Seja bem vindo <?php echo $_SESSION['id_usuario']; ?></p>
+    <p>Seja bem vindo <?php echo $_SESSION ['id_usuario']; ?> </p>
 </body>
 </html>
