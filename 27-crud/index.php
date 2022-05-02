@@ -1,5 +1,5 @@
 <?php
-include_once 'includes/header.php';
+include_once 'includes/header.php';//implementa o cabeçalho
 ?>
 
 <div class="row">
@@ -27,10 +27,10 @@ include_once 'includes/header.php';
 
             </table>
             <br>
-            <a href="adicionar.php" class="btn">ADICIONAR CLIENTE</a>
+            <a href="adicionar.php" class="btn">ADICIONAR CLIENTE</a> <!--botao de adicionar cliente-->
     </div>
 </div>
 
 <?php
-include_once 'includes/footer.php';
+include_once 'includes/footer.php';//inclui o rodape
 ?>
