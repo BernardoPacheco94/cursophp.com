@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 //Página para criar cliente
 require_once 'db_connect.php';//conecta com o banco
 
@@ -11,8 +13,10 @@ if (isset($_POST['btn-cadastrar'])){//verifica se o botao de cadastro foi clicad
     $sql = "INSERT INTO clientes (nome, sobrenome, email, idade) VALUES ('$nome', '$sobrenome', '$email', '$idade')" ;
 
     if(mysqli_query($connect, $sql)){
-        header('Location: ../index.php?sucesso');
+        $_SESSION ['mensagem']= "Cliente cadastrado!";
+        header('Location: ../index.php');
     }else{
-        header('Location ../index.php?erro');
+        $_SESSION ['mensagem'] = "Erro ao cadastrar cliente";
+        header('Location: ../index.php');
     }
 }
